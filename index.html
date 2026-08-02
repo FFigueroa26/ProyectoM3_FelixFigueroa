@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Shaun Murphy — Chat</title>
+  <link rel="stylesheet" href="src/styles/base.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+</head>
+<body>
+  <div class="chat-app">
+    <header class="chat-header">
+      <div class="avatar avatar--header">SM</div>
+      <div class="chat-header__info">
+        <h1 class="chat-header__name">Dr. Shaun Murphy</h1>
+        <span class="chat-header__status">
+          <span class="status-dot"></span>
+          En línea
+        </span>
+      </div>
+    </header>
+
+    <main class="chat-messages" aria-live="polite">
+      <div class="message message--shaun">
+        <div class="message__avatar">SM</div>
+        <div class="message__bubble">
+          <p>Hola, soy el Dr. Shaun Murphy. ¿En qué puedo ayudarte?</p>
+        </div>
+      </div>
+
+      <div class="message message--user">
+        <div class="message__bubble">
+          <p>Hola Shaun, ¿cómo estás hoy?</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="chat-input">
+      <input
+        class="chat-input__field"
+        type="text"
+        placeholder="Escribe un mensaje..."
+        aria-label="Mensaje"
+      >
+      <button class="chat-input__send" type="button" aria-label="Enviar">➤</button>
+    </footer>
+  </div>
+</body>
+</html>

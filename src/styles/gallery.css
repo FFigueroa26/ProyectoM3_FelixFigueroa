@@ -1,0 +1,109 @@
+.gallery {
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.gallery__title {
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.gallery__subtitle {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.character-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.character-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--card-color, var(--color-primary));
+}
+
+.character-card__avatar {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--card-color, var(--color-primary));
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.character-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.character-card__name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.character-card__franchise {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--card-color, var(--color-primary));
+  font-weight: 600;
+}
+
+.character-card__desc {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}
+
+.character-card__cta {
+  margin-left: auto;
+  font-size: 1.3rem;
+  color: var(--card-color, var(--color-primary));
+  flex-shrink: 0;
+}
+
+@media (min-width: 769px) {
+  .gallery {
+    max-width: 720px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    padding: 2.5rem 1rem;
+  }
+
+  .gallery__title,
+  .gallery__subtitle {
+    grid-column: 1 / -1;
+  }
+
+  .character-card {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .character-card__cta {
+    margin-left: 0;
+  }
+}
