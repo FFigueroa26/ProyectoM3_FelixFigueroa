@@ -1,4 +1,12 @@
 import { getCharacterById } from "../data/characters.js";
+import { getMessages, addMessage } from "../services/messages.js";
+import { escapeHtml } from "../utils.js";
+
+const mockReplies = [
+  "Interesante. Cuéntame más.",
+  "Entiendo. ¿Y qué más?",
+  "Eso me recuerda a un caso de anatomía.",
+];
 
 export const chatView = {
   render({ id }) {
@@ -20,14 +28,7 @@ export const chatView = {
           </div>
         </header>
 
-        <main class="chat-messages" aria-live="polite" id="chat-messages">
-          <div class="message message--character">
-            <div class="message__avatar">${character.iniciales}</div>
-            <div class="message__bubble">
-              <p>Hola, soy ${character.nombre}. ¿En qué puedo ayudarte?</p>
-            </div>
-          </div>
-        </main>
+        <main class="chat-messages" aria-live="polite" id="chat-messages"></main>
 
         <footer class="chat-input">
           <input
@@ -42,5 +43,63 @@ export const chatView = {
     `;
   },
 
-  mount() {},
+  mount({ id }) {
+    const character = getCharacterById(id);
+    if (!character) return;
+
+    if (getMessages(id).length === 0) {
+      addMessage(id, "character", `Hola, soy ${character.nombre}. ¿En qué puedo ayudarte?`);
+    }
+
+    const messagesEl = document.querySelector("#chat-messages");
+    const inputEl = document.querySelector(".chat-input__field");
+    const sendBtn = document.querySelector(".chat-input__send");
+
+    function renderMessages() {
+      const messages = getMessages(id);
+      messagesEl.innerHTML = messages
+        .map((msg) => {
+          const content = escapeHtml(msg.content);
+          if (msg.role === "user") {
+            return `
+              <div class="message message--user">
+                <div class="message__bubble"><p>${content}</p></div>
+              </div>
+            `;
+          }
+          return `
+            <div class="message message--character">
+              <div class="message__avatar">${character.iniciales}</div>
+              <div class="message__bubble"><p>${content}</p></div>
+            </div>
+          `;
+        })
+        .join("");
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function handleSend() {
+      const text = inputEl.value.trim();
+      if (!text) return;
+      inputEl.value = "";
+      addMessage(id, "user", text);
+      renderMessages();
+      simulateReply();
+    }
+
+    function simulateReply() {
+      setTimeout(() => {
+        const reply = mockReplies[Math.floor(Math.random() * mockReplies.length)];
+        addMessage(id, "character", reply);
+        renderMessages();
+      }, 700);
+    }
+
+    sendBtn.addEventListener("click", handleSend);
+    inputEl.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") handleSend();
+    });
+
+    renderMessages();
+  },
 };
