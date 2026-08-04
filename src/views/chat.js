@@ -1,5 +1,6 @@
 import { getCharacterById } from "../data/characters.js";
 import { getMessages, addMessage } from "../services/messages.js";
+import { getPrompt } from "../services/prompts.js";
 import { escapeHtml } from "../utils.js";
 
 const mockReplies = [
@@ -45,10 +46,11 @@ export const chatView = {
 
   mount({ id }) {
     const character = getCharacterById(id);
-    if (!character) return;
+    const prompt = getPrompt(id);
+    if (!character || !prompt) return;
 
     if (getMessages(id).length === 0) {
-      addMessage(id, "character", `Hola, soy ${character.nombre}. ¿En qué puedo ayudarte?`);
+      addMessage(id, "character", prompt.saludo);
     }
 
     const messagesEl = document.querySelector("#chat-messages");
