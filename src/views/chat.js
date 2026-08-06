@@ -1,5 +1,5 @@
 import { getCharacterById } from "../data/characters.js";
-import { getMessages, addMessage } from "../services/messages.js";
+import { getMessages, addMessage, clearMessages, hasHistory } from "../services/messages.js";
 import { getPrompt } from "../services/prompts.js";
 import { sendChat } from "../services/api.js";
 import { escapeHtml } from "../utils.js";
@@ -11,6 +11,8 @@ export const chatView = {
       return `<h1>404</h1><p>Personaje no encontrado</p>`;
     }
 
+    const saved = hasHistory(id);
+
     return `
       <section class="chat-app" style="--color-primary: ${character.color}; --color-primary-dark: ${character.colorDark}; --color-primary-soft: ${character.colorSoft}">
         <header class="chat-header">
@@ -21,6 +23,10 @@ export const chatView = {
               <span class="status-dot"></span>
               En línea
             </span>
+          </div>
+          <div class="chat-header__actions">
+            ${saved ? '<span class="history-badge">Historial guardado</span>' : ""}
+            <button class="chat-header__clear" type="button" aria-label="Borrar historial">Borrar</button>
           </div>
         </header>
 
@@ -51,6 +57,18 @@ export const chatView = {
     const messagesEl = document.querySelector("#chat-messages");
     const inputEl = document.querySelector(".chat-input__field");
     const sendBtn = document.querySelector(".chat-input__send");
+    const clearBtn = document.querySelector(".chat-header__clear");
+
+    function updateHistoryBadge() {
+      const badge = document.querySelector(".history-badge");
+      if (hasHistory(id) && !badge) {
+        document
+          .querySelector(".chat-header__actions")
+          .insertAdjacentHTML("afterbegin", `<span class="history-badge">Historial guardado</span>`);
+      } else if (!hasHistory(id) && badge) {
+        badge.remove();
+      }
+    }
 
     function renderMessages() {
       const messages = getMessages(id);
@@ -103,7 +121,15 @@ export const chatView = {
       inputEl.value = "";
       addMessage(id, "user", text);
       renderMessages();
+      updateHistoryBadge();
       requestReply();
+    }
+
+    function handleClear() {
+      clearMessages(id);
+      addMessage(id, "character", prompt.saludo);
+      renderMessages();
+      updateHistoryBadge();
     }
 
     async function requestReply() {
@@ -126,6 +152,7 @@ export const chatView = {
         sendBtn.disabled = false;
         inputEl.focus();
         renderMessages();
+        updateHistoryBadge();
       }
     }
 
@@ -133,6 +160,7 @@ export const chatView = {
     inputEl.addEventListener("keydown", (event) => {
       if (event.key === "Enter") handleSend();
     });
+    if (clearBtn) clearBtn.addEventListener("click", handleClear);
 
     renderMessages();
   },

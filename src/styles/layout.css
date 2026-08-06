@@ -78,6 +78,40 @@ body {
   opacity: 0.9;
 }
 
+.chat-header__info {
+  flex: 1;
+}
+
+.chat-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chat-header__clear {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  color: #fff;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-md);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chat-header__clear:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.history-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-md);
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
 .status-dot {
   width: 8px;
   height: 8px;

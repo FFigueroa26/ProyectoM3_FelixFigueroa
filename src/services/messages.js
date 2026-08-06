@@ -1,14 +1,36 @@
-const chats = {};
+const STORAGE_PREFIX = "chat-historial-";
+
+function key(characterId) {
+  return `${STORAGE_PREFIX}${characterId}`;
+}
 
 export function getMessages(characterId) {
-  if (!chats[characterId]) {
-    chats[characterId] = [];
+  try {
+    const raw = localStorage.getItem(key(characterId));
+    const messages = raw ? JSON.parse(raw) : [];
+    if (Array.isArray(messages)) return messages;
+    return [];
+  } catch {
+    return [];
   }
-  return chats[characterId];
+}
+
+function persist(characterId, messages) {
+  localStorage.setItem(key(characterId), JSON.stringify(messages));
 }
 
 export function addMessage(characterId, role, content) {
+  const messages = getMessages(characterId);
   const message = { role, content };
-  getMessages(characterId).push(message);
+  messages.push(message);
+  persist(characterId, messages);
   return message;
+}
+
+export function clearMessages(characterId) {
+  localStorage.removeItem(key(characterId));
+}
+
+export function hasHistory(characterId) {
+  return getMessages(characterId).length > 0;
 }
