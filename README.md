@@ -7,21 +7,39 @@ personajes ficticios de películas y series usando **inteligencia artificial (Go
 
 ---
 
-## 🧑‍⚕️ Personaje elegido
+## 🧑‍⚕️ Personajes elegidos
+
+El proyecto cuenta con **tres personajes seleccionables** desde la galería, cada uno con su
+propio prompt de contexto:
 
 ### Dr. Shaun Murphy — *The Good Doctor*
 
 > Cirujano autista savant del Hospital St. Bonaventure. Piensa en datos, evidencia y
 > anatomía. Honesto hasta la incomodidad, pero con un corazón clínico enorme.
 
-El acceso usa **tres personajes seleccionables** desde la galería, cada uno con su propio
-prompt de contexto:
+### Joe Goldberg — *You*
 
-| Personaje | Franquicia | Descripción |
-|---|---|---|
-| **Dr. Shaun Murphy** | The Good Doctor | Cirujano autista savant, directo y clínico |
-| **Joe Goldberg** | You | Librero encantador con un lado muy oscuro |
-| **Boyd Stevens** | From | Sheriff pragmático y protector de su pueblo |
+> Librero encantador con un monólogo interno obsesivo. Parece el novio perfecto, pero sus
+> pensamientos guardan un lado mucho más oscuro.
+
+### Boyd Stevens — *From*
+
+> Sheriff y líder de la ciudad de From. Pragmático, protector y de pocas palabras. Lleva
+> sobre sus hombros el peso de mantener viva a su gente.
+
+---
+
+## 🛠️ Stack
+
+| Capa | Tecnología |
+|---|---|
+| Frontend | HTML, CSS y **JavaScript vanilla** con **Vite** |
+| Enrutado | SPA con **History API** |
+| Backend | **Vercel Serverless Functions** (`/api/functions`) |
+| IA | **Google Gemini** (`gemini-3.5-flash`) |
+| Persistencia | `localStorage` del navegador |
+| Tests | **Vitest** (unit, con `fetch` mockeado) |
+| Deploy | **Vercel** (GitHub + auto-deploy) |
 
 ---
 
