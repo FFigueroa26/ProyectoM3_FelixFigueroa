@@ -47,10 +47,10 @@
   border-radius: var(--radius-md);
   max-width: 78%;
   width: fit-content;
+  min-width: 6.5rem;
   font-size: 0.95rem;
   word-wrap: break-word;
   overflow-wrap: anywhere;
-  min-width: 0;
 }
 
 .message--character {
