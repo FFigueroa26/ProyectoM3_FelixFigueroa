@@ -43,6 +43,22 @@ describe("sendChat", () => {
     vi.unstubAllGlobals();
   });
 
+  it("propaga el status 429 del servidor en el error", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: false, status: 429 })
+    );
+
+    const error = await sendChat({
+      systemPrompt: "p",
+      messages: [],
+    }).catch((e) => e);
+
+    expect(error.status).toBe(429);
+
+    vi.unstubAllGlobals();
+  });
+
   it("lanza un error si fetch falla", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("red caída")));
 

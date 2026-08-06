@@ -45,7 +45,13 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       console.error("Error de Gemini:", data);
-      res.status(response.status).json({ error: "Error al contactar a Gemini" });
+      const status = response.status;
+      const isRateLimit = status === 429;
+      res.status(status).json({
+        error: isRateLimit
+          ? "Se alcanzó el límite de peticiones de la API"
+          : "Error al contactar a Gemini",
+      });
       return;
     }
 

@@ -6,7 +6,9 @@ export async function sendChat({ systemPrompt, messages }) {
   });
 
   if (!response.ok) {
-    throw new Error("La petición falló");
+    const error = new Error("La petición falló");
+    error.status = response.status;
+    throw error;
   }
 
   const data = await response.json();

@@ -2,7 +2,9 @@ import { getCharacterById } from "../data/characters.js";
 import { getMessages, addMessage, clearMessages, hasHistory } from "../services/messages.js";
 import { getPrompt } from "../services/prompts.js";
 import { sendChat } from "../services/api.js";
-import { escapeHtml } from "../utils.js";
+import { escapeHtml, lastMessages } from "../utils.js";
+
+const MAX_HISTORY = 12;
 
 function formatTime(timestamp) {
   if (!timestamp) return "";
@@ -152,14 +154,18 @@ export const chatView = {
       setTyping(true);
 
       try {
-        const messages = getMessages(id).map((msg) => ({
+        const messages = lastMessages(getMessages(id), MAX_HISTORY).map((msg) => ({
           role: msg.role,
           content: msg.content,
         }));
         const text = await sendChat({ systemPrompt: prompt.texto, messages });
         addMessage(id, "character", text);
       } catch (error) {
-        addMessage(id, "character", "Lo siento, hubo un problema. Inténtalo de nuevo.");
+        const message =
+          error?.status === 429
+            ? "Se alcanzó el límite de peticiones. Espera un momento y vuelve a intentarlo."
+            : "Lo siento, hubo un problema. Inténtalo de nuevo.";
+        addMessage(id, "character", message);
       } finally {
         setTyping(false);
         inputEl.disabled = false;
