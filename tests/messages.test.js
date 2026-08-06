@@ -40,6 +40,13 @@ describe("messages store", () => {
     expect(getMessages("shaun-murphy")).toHaveLength(0);
   });
 
+  it("agrega un timestamp numérico a cada mensaje", () => {
+    addMessage("shaun-murphy", "user", "hola");
+    const messages = getMessages("shaun-murphy");
+    expect(messages[0]).toHaveProperty("timestamp");
+    expect(typeof messages[0].timestamp).toBe("number");
+  });
+
   it("persiste en localStorage", () => {
     addMessage("boyd-stevens", "user", "hola boyd");
     const raw = storage.getItem("chat-historial-boyd-stevens");

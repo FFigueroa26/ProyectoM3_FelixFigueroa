@@ -4,6 +4,14 @@ import { getPrompt } from "../services/prompts.js";
 import { sendChat } from "../services/api.js";
 import { escapeHtml } from "../utils.js";
 
+function formatTime(timestamp) {
+  if (!timestamp) return "";
+  return new Date(timestamp).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 export const chatView = {
   render({ id }) {
     const character = getCharacterById(id);
@@ -75,17 +83,23 @@ export const chatView = {
       messagesEl.innerHTML = messages
         .map((msg) => {
           const content = escapeHtml(msg.content);
+          const time = `<span class="message__time">${formatTime(msg.timestamp)}</span>`;
           if (msg.role === "user") {
             return `
               <div class="message message--user">
-                <div class="message__bubble"><p>${content}</p></div>
+                <div class="message__bubble"><p>${content}</p>${time}</div>
               </div>
             `;
           }
           return `
             <div class="message message--character">
               <div class="message__avatar"><img class="avatar__img" src="${character.imagen}" alt="Retrato de ${character.nombre}"></div>
-              <div class="message__bubble"><p>${content}</p></div>
+              <div class="message__bubble"><p>${content}</p>
+                <div class="message__footer">
+                  <button class="message__copy" type="button" data-copy aria-label="Copiar respuesta">Copiar</button>
+                  ${time}
+                </div>
+              </div>
             </div>
           `;
         })
@@ -161,6 +175,26 @@ export const chatView = {
       if (event.key === "Enter") handleSend();
     });
     if (clearBtn) clearBtn.addEventListener("click", handleClear);
+
+    messagesEl.addEventListener("click", async (event) => {
+      const copyBtn = event.target.closest("[data-copy]");
+      if (!copyBtn) return;
+      const bubble = copyBtn.closest(".message__bubble");
+      const p = bubble ? bubble.querySelector("p") : null;
+      const text = p ? p.textContent : "";
+      try {
+        await navigator.clipboard.writeText(text);
+        const original = copyBtn.textContent;
+        copyBtn.textContent = "¡Copiado!";
+        copyBtn.dataset.copied = "true";
+        setTimeout(() => {
+          copyBtn.textContent = original;
+          delete copyBtn.dataset.copied;
+        }, 1500);
+      } catch {
+        copyBtn.textContent = "Error";
+      }
+    });
 
     renderMessages();
   },

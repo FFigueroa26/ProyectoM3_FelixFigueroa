@@ -21,7 +21,7 @@ function persist(characterId, messages) {
 
 export function addMessage(characterId, role, content) {
   const messages = getMessages(characterId);
-  const message = { role, content };
+  const message = { role, content, timestamp: Date.now() };
   messages.push(message);
   persist(characterId, messages);
   return message;
