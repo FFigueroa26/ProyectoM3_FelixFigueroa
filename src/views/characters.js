@@ -6,13 +6,15 @@ export const charactersView = {
       .map(
         (c) => `
         <a class="character-card" href="/chat/${c.id}" data-link style="--card-color: ${c.color}">
-          <div class="character-card__avatar">${c.iniciales}</div>
-          <div class="character-card__body">
-            <p class="character-card__name">${c.nombre}</p>
-            <p class="character-card__franchise">${c.franquicia}</p>
-            <p class="character-card__desc">${c.descripcion}</p>
+          <div class="character-card__media">
+            <img class="character-card__img" src="${c.imagen}" alt="Retrato de ${c.nombre}">
           </div>
-          <span class="character-card__cta">→</span>
+          <div class="character-card__body">
+            <h2 class="character-card__name">${c.nombre}</h2>
+            <span class="character-card__franchise">${c.franquicia}</span>
+            <p class="character-card__desc">${c.descripcion}</p>
+            <span class="character-card__cta">Chatear →</span>
+          </div>
         </a>
       `
       )

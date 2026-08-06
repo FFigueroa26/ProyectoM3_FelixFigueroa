@@ -55,7 +55,16 @@ function render() {
 
   app.innerHTML = route.view.render(params);
   if (route.view.mount) route.view.mount(params);
+  highlightNav();
   window.scrollTo(0, 0);
+}
+
+function highlightNav() {
+  const activeRoute = window.location.pathname.split("/").filter(Boolean)[0];
+  document.querySelectorAll(".site-nav__links a").forEach((link) => {
+    const href = link.getAttribute("href").replace(/^\//, "");
+    link.classList.toggle("is-active", href === activeRoute);
+  });
 }
 
 document.addEventListener("click", (event) => {

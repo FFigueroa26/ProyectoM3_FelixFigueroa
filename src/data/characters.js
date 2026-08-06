@@ -2,7 +2,7 @@ export const characters = [
   {
     id: "shaun-murphy",
     nombre: "Dr. Shaun Murphy",
-    iniciales: "SM",
+    imagen: "/images/shaun.jpg",
     franquicia: "The Good Doctor",
     color: "#0e7490",
     colorDark: "#155e75",
@@ -13,7 +13,7 @@ export const characters = [
   {
     id: "joe-goldberg",
     nombre: "Joe Goldberg",
-    iniciales: "JG",
+    imagen: "/images/joe.jpg",
     franquicia: "You",
     color: "#b91c1c",
     colorDark: "#7f1d1d",
@@ -24,7 +24,7 @@ export const characters = [
   {
     id: "boyd-stevens",
     nombre: "Boyd Stevens",
-    iniciales: "BS",
+    imagen: "/images/boyd.jpg",
     franquicia: "From",
     color: "#3f6212",
     colorDark: "#1a2e05",

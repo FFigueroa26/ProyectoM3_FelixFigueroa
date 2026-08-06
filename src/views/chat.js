@@ -14,9 +14,9 @@ export const chatView = {
     const saved = hasHistory(id);
 
     return `
-      <section class="chat-app" style="--color-primary: ${character.color}; --color-primary-dark: ${character.colorDark}; --color-primary-soft: ${character.colorSoft}">
+      <section class="chat-app" style="--color-primary: ${character.color}; --color-primary-dark: ${character.colorDark}; --color-primary-soft: ${character.colorSoft}; --color-on-primary: #ffffff">
         <header class="chat-header">
-          <div class="avatar avatar--header">${character.iniciales}</div>
+          <div class="avatar avatar--header"><img class="avatar__img" src="${character.imagen}" alt="Retrato de ${character.nombre}"></div>
           <div class="chat-header__info">
             <h1 class="chat-header__name">${character.nombre}</h1>
             <span class="chat-header__status">
@@ -84,7 +84,7 @@ export const chatView = {
           }
           return `
             <div class="message message--character">
-              <div class="message__avatar">${character.iniciales}</div>
+              <div class="message__avatar"><img class="avatar__img" src="${character.imagen}" alt="Retrato de ${character.nombre}"></div>
               <div class="message__bubble"><p>${content}</p></div>
             </div>
           `;
@@ -100,7 +100,7 @@ export const chatView = {
           "beforeend",
           `
           <div class="message message--character typing">
-            <div class="message__avatar">${character.iniciales}</div>
+            <div class="message__avatar"><img class="avatar__img" src="${character.imagen}" alt="Retrato de ${character.nombre}"></div>
             <div class="message__bubble typing__bubble">
               <span class="typing__dot"></span>
               <span class="typing__dot"></span>

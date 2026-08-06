@@ -10,13 +10,13 @@ export const aboutView = {
         </p>
         <h2 class="about__subtitle">Los personajes</h2>
         <ul class="about__list">
-          <li><strong>Dr. Shaun Murphy</strong> — The Good Doctor</li>
-          <li><strong>Joe Goldberg</strong> — You</li>
-          <li><strong>Boyd Stevens</strong> — From</li>
+          <li><strong>Dr. Shaun Murphy</strong> — <strong>The Good Doctor:</strong>  cirujano autista sabio y honesto.</li>
+          <li><strong>Joe Goldberg</strong> — <strong>You:</strong>  librero encantador con un lado muy oscuro.</li>
+          <li><strong>Boyd Stevens</strong> — <strong>From:</strong>  sheriff pragmático y protector de su pueblo.</li>
         </ul>
         <p class="about__text">
-          El historial de conversación se mantiene solo durante tu sesión: al recargar
-          la página, la conversación comienza de nuevo.
+          Tu historial de conversación se guarda en el navegador, así que al recargar
+          la página puedes retomar tu charla donde la dejaste.
         </p>
       </section>
     `;
