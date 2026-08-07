@@ -7,6 +7,71 @@ personajes ficticios de películas y series usando **inteligencia artificial (Go
 
 ---
 
+## 🚀 Ejecutar en local
+
+1. **Clonar el repositorio**
+
+   ```bash
+   git clone https://github.com/FFigueroa26/ProyectoM3_FelixFigueroa.git
+   cd ProyectoM3_FelixFigueroa
+   ```
+
+   O bien, dale **Code → Download ZIP** en GitHub y descomprime el proyecto.
+
+2. **Descargar dependencias**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configurar la clave de Gemini**
+
+   Crea un archivo `.env` en la raíz del proyecto:
+
+   ```env
+   GEMINI_API_KEY=tu_api_key_aqui
+   ```
+
+4. **Ejecutar con Vercel dev**
+
+   El proyecto usa una Serverless Function (`/api/functions`) que actúa como proxy
+   hacia Gemini, por lo que la app debe ejecutarse con el CLI de Vercel para tener esa ruta:
+
+   ```bash
+   npm i -g vercel
+   vercel dev
+   ```
+
+   Se levanta el servidor (por defecto en `http://localhost:3000`).
+
+> **Nota:** la primera vez que ejecutes `vercel dev`, el CLI te pedirá
+> autenticación. Si no tienes cuenta, créala de forma gratuita en
+> [vercel.com](https://vercel.com) e inicia sesión con `vercel login`.
+
+> **Nota:** la clave **nunca** se expone al navegador; solo se usa en el lado del servidor.
+
+---
+
+## 📁 Estructura del proyecto
+
+```
+├── api/
+│   └── functions.js        # Serverless Function (proxy a Gemini)
+├── public/images/          # Imágenes de los personajes
+├── src/
+│   ├── data/               # Datos de los personajes
+│   ├── services/           # API, historial y prompts
+│   ├── styles/             # CSS (variables, layout, componentes, galería)
+│   ├── views/              # Vistas (home, characters, chat, about)
+│   ├── theme.js            # Modo oscuro/claro
+│   ├── router.js           # Router SPA (History API)
+│   └── main.js
+├── tests/                  # Pruebas unitarias (Vitest)
+└── vercel.json             # Configuración de Vercel
+```
+
+---
+
 ## 🧑‍⚕️ Personajes elegidos
 
 El proyecto cuenta con **tres personajes seleccionables** desde la galería, cada uno con su
@@ -67,38 +132,6 @@ propio prompt de contexto:
 
 ---
 
-## 🚀 Ejecutar en local
-
-1. **Descargar dependencias**
-
-   ```bash
-   npm install
-   ```
-
-2. **Configurar la clave de Gemini**
-
-   Crea un archivo `.env` en la raíz del proyecto:
-
-   ```env
-   GEMINI_API_KEY=tu_api_key_aqui
-   ```
-
-3. **Ejecutar con Vercel dev**
-
-   El proyecto usa una Serverless Function (`/api/functions`) que actúa como proxy
-   hacia Gemini, por lo que la app debe ejecutarse con el CLI de Vercel para tener esa ruta:
-
-   ```bash
-   npm i -g vercel
-   vercel dev
-   ```
-
-   Se levanta el servidor (por defecto en `http://localhost:3000`).
-
-> **Nota:** la clave **nunca** se expone al navegador; solo se usa en el lado del servidor.
-
----
-
 ## 🧪 Ejecutar los tests
 
 Los tests unitarios usan **Vitest** y **mockean `fetch`** para que corran sin conexión ni consumo de API.
@@ -149,23 +182,3 @@ Este proyecto integra **inteligencia artificial** de la siguiente forma:
   navegador del usuario.
 - **Verificación**: Los tests unitarios mockean la llamada a la IA (con `fetch`) para
   validar la lógica sin contactar el modelo.
-
----
-
-## 📁 Estructura del proyecto
-
-```
-├── api/
-│   └── functions.js        # Serverless Function (proxy a Gemini)
-├── public/images/          # Imágenes de los personajes
-├── src/
-│   ├── data/               # Datos de los personajes
-│   ├── services/           # API, historial y prompts
-│   ├── styles/             # CSS (variables, layout, componentes, galería)
-│   ├── views/              # Vistas (home, characters, chat, about)
-│   ├── theme.js            # Modo oscuro/claro
-│   ├── router.js           # Router SPA (History API)
-│   └── main.js
-├── tests/                  # Pruebas unitarias (Vitest)
-└── vercel.json             # Configuración de Vercel
-```
