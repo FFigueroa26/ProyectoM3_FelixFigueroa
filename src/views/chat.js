@@ -151,6 +151,7 @@ export const chatView = {
     async function requestReply() {
       inputEl.disabled = true;
       sendBtn.disabled = true;
+      if (clearBtn) clearBtn.disabled = true;
       setTyping(true);
 
       try {
@@ -170,6 +171,7 @@ export const chatView = {
         setTyping(false);
         inputEl.disabled = false;
         sendBtn.disabled = false;
+        if (clearBtn) clearBtn.disabled = false;
         inputEl.focus();
         renderMessages();
         updateHistoryBadge();

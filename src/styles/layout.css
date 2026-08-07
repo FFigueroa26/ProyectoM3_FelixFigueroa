@@ -84,15 +84,6 @@ body {
 }
 
 .site-nav__links a.is-active {
-  color: #fff;
-  background: var(--color-primary);
-}
-
-.site-nav__links a:hover::after {
-  width: 55%;
-}
-
-.site-nav__links a.is-active {
   color: var(--color-on-primary);
   background: var(--color-primary);
 }
@@ -190,6 +181,11 @@ body {
 
 .chat-header__clear:hover {
   background: rgba(255, 255, 255, 0.15);
+}
+
+.chat-header__clear:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .history-badge {
