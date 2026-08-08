@@ -56,18 +56,19 @@ personajes ficticios de películas y series usando **inteligencia artificial (Go
 
 ```
 ├── api/
-│   └── functions.js        # Serverless Function (proxy a Gemini)
-├── public/images/          # Imágenes de los personajes
+│   ├── chatPayload.js        # Construcción del payload para Gemini
+│   └── functions.js          # Serverless Function (proxy a Gemini)
+├── public/images/            # Imágenes de los personajes
 ├── src/
-│   ├── data/               # Datos de los personajes
-│   ├── services/           # API, historial y prompts
-│   ├── styles/             # CSS (variables, layout, componentes, galería)
-│   ├── views/              # Vistas (home, characters, chat, about)
-│   ├── theme.js            # Modo oscuro/claro
-│   ├── router.js           # Router SPA (History API)
+│   ├── data/                 # Datos de los personajes
+│   ├── services/             # API, historial y prompts
+│   ├── styles/               # CSS (variables, layout, componentes, galería)
+│   ├── views/                # Vistas (home, characters, chat, about, notFound)
+│   ├── theme.js              # Modo oscuro/claro
+│   ├── router.js             # Router SPA (History API)
 │   └── main.js
-├── tests/                  # Pruebas unitarias (Vitest)
-└── vercel.json             # Configuración de Vercel
+├── tests/                    # Pruebas unitarias (Vitest)
+└── vercel.json               # Configuración de Vercel
 ```
 
 ---
@@ -163,7 +164,21 @@ una Serverless Function (`/api/functions`) y el resto se redirija a `index.html`
 
 ## 📸 Capturas de pantalla
 
-_Insertar aquí capturas de la aplicación (home, galería, chat, modo oscuro)._
+### Home
+
+![Home](public/images/screenshot-home.png)
+
+### Galería de personajes
+
+![Galería de personajes](public/images/screenshot-personajes.png)
+
+### Chat con un personaje
+
+![Chat](public/images/screenshot-chat.png)
+
+### Modo oscuro
+
+![Modo oscuro](public/images/screenshot-modo-oscuro.png)
 
 ---
 

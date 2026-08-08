@@ -34,7 +34,7 @@ function parsePath(pathname) {
   return null;
 }
 
-export function navigate(path) {
+function navigate(path) {
   history.pushState({}, "", path);
   render();
 }
