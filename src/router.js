@@ -2,6 +2,7 @@ import { homeView } from "./views/home.js";
 import { charactersView } from "./views/characters.js";
 import { chatView } from "./views/chat.js";
 import { aboutView } from "./views/about.js";
+import { notFoundView } from "./views/notFound.js";
 
 const routes = [
   { path: "/", redirect: "/home" },
@@ -43,7 +44,7 @@ function render() {
   const found = parsePath(pathname);
 
   if (!found) {
-    app.innerHTML = "<h1>404</h1><p>Página no encontrada</p>";
+    app.innerHTML = notFoundView.render();
     return;
   }
 

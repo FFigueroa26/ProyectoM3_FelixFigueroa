@@ -1,3 +1,5 @@
+import { buildChatPayload, GEMINI_URL } from "./chatPayload.js";
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(405).json({ error: "Método no permitido" });
@@ -17,29 +19,17 @@ export default async function handler(req, res) {
     return;
   }
 
-  const contents = messages.map((msg) => ({
-    role: msg.role === "user" ? "user" : "model",
-    parts: [{ text: msg.content }],
-  }));
-
-  const requestBody = {
-    systemInstruction: { parts: [{ text: systemPrompt }] },
-    contents,
-    generationConfig: { temperature: 0.9 },
-  };
+  const requestBody = buildChatPayload({ systemPrompt, messages });
 
   try {
-    const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey,
-        },
-        body: JSON.stringify(requestBody),
-      }
-    );
+    const response = await fetch(GEMINI_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": apiKey,
+      },
+      body: JSON.stringify(requestBody),
+    });
 
     const data = await response.json();
 
