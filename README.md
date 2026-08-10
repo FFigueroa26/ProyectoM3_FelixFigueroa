@@ -39,14 +39,15 @@ personajes ficticios de películas y series usando **inteligencia artificial (Go
 
    ```bash
    npm i -g vercel
-   vercel dev
+   npx vercel dev --yes
    ```
 
    Se levanta el servidor (por defecto en `http://localhost:3000`).
 
-> **Nota:** la primera vez que ejecutes `vercel dev`, el CLI te pedirá
-> autenticación. Si no tienes cuenta, créala de forma gratuita en
-> [vercel.com](https://vercel.com) e inicia sesión con `vercel login`.
+> **Nota:** `npx vercel dev --yes` confirma automáticamente la inicialización del
+> proyecto y evita errores al usar el CLI por primera vez. La primera ejecución
+> también te pedirá autenticación; si no tienes cuenta, créala de forma gratuita
+> en [vercel.com](https://vercel.com) e inicia sesión con `vercel login`.
 
 > **Nota:** la clave **nunca** se expone al navegador; solo se usa en el lado del servidor.
 
