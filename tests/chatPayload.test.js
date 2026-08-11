@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildChatPayload, GEMINI_MODEL, GEMINI_URL } from "../api/chatPayload.js";
+import { buildChatPayload, GEMINI_MODEL, GEMINI_URL } from "../src/server/chatPayload.js";
 
 describe("buildChatPayload", () => {
   it("mapea los mensajes de usuario como role user", () => {

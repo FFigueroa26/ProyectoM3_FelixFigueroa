@@ -49,6 +49,11 @@ personajes ficticios de películas y series usando **inteligencia artificial (Go
 > también te pedirá autenticación; si no tienes cuenta, créala de forma gratuita
 > en [vercel.com](https://vercel.com) e inicia sesión con `vercel login`.
 
+> **Nota (Windows):** si PowerShell bloquea `npx.ps1` por la política de ejecución
+> de scripts (`No se puede cargar el archivo ... npx.ps1 porque la ejecución de
+> scripts está deshabilitada`), usa el ejecutable directo: `npx.cmd vercel dev --yes`
+> (o habilita scripts con `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`).
+
 > **Nota:** la clave **nunca** se expone al navegador; solo se usa en el lado del servidor.
 
 ---
@@ -57,11 +62,11 @@ personajes ficticios de películas y series usando **inteligencia artificial (Go
 
 ```
 ├── api/
-│   ├── chatPayload.js        # Construcción del payload para Gemini
 │   └── functions.js          # Serverless Function (proxy a Gemini)
 ├── public/images/            # Imágenes de los personajes
 ├── src/
 │   ├── data/                 # Datos de los personajes
+│   ├── server/               # Lógica de servidor (construcción del payload de Gemini)
 │   ├── services/             # API, historial y prompts
 │   ├── styles/               # CSS (variables, layout, componentes, galería)
 │   ├── views/                # Vistas (home, characters, chat, about, notFound)

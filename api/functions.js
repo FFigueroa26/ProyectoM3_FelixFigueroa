@@ -1,4 +1,4 @@
-import { buildChatPayload, GEMINI_URL } from "./chatPayload.js";
+import { buildChatPayload, GEMINI_URL } from "../src/server/chatPayload.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
