@@ -142,6 +142,8 @@ export const chatView = {
     }
 
     function handleClear() {
+      const sure = window.confirm("¿Seguro que quieres borrar todo el historial de esta conversación?");
+      if (!sure) return;
       clearMessages(id);
       addMessage(id, "character", prompt.saludo);
       renderMessages();
