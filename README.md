@@ -138,7 +138,7 @@ propio prompt de contexto:
 | Frontend | HTML, CSS y **JavaScript vanilla** con **Vite** |
 | Enrutado | SPA con **History API** |
 | Backend | **Vercel Serverless Functions** (`/api/functions`) |
-| IA | **Google Gemini** (`gemini-3.5-flash`) |
+| IA | **Google Gemini** (`gemini-3.1-flash-lite`) |
 | Persistencia | `localStorage` del navegador |
 | Tests | **Vitest** (unit, con `fetch` mockeado) |
 | Deploy | **Vercel** (GitHub + auto-deploy) |
@@ -222,7 +222,7 @@ una Serverless Function (`/api/functions`) y el resto se redirija a `index.html`
 
 Este proyecto integra **inteligencia artificial** de la siguiente forma:
 
-- **Modelo**: `gemini-3.5-flash` de Google (vía la API `generativelanguage.googleapis.com`).
+- **Modelo**: `gemini-3.1-flash-lite` de Google (vía la API `generativelanguage.googleapis.com`).
 - **Prompt de sistema**: Cada personaje tiene una definición de personalidad, tono y
   límites éticos (ver `src/services/prompts.js`).
 - **Historial**: Se envían los mensajes previos de la conversación junto con el prompt

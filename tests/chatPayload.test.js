@@ -40,6 +40,6 @@ describe("buildChatPayload", () => {
     expect(GEMINI_URL).toBe(
       `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`
     );
-    expect(GEMINI_MODEL).toBe("gemini-3.5-flash");
+    expect(GEMINI_MODEL).toBe("gemini-3.1-flash-lite");
   });
 });

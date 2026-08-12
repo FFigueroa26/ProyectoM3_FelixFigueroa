@@ -1,4 +1,4 @@
-export const GEMINI_MODEL = "gemini-3.5-flash";
+export const GEMINI_MODEL = "gemini-3.1-flash-lite";
 export const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 export function buildChatPayload({ systemPrompt, messages }) {
