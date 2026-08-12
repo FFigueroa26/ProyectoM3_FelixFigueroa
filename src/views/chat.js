@@ -43,12 +43,15 @@ export const chatView = {
         <main class="chat-messages" aria-live="polite" id="chat-messages"></main>
 
         <footer class="chat-input">
-          <input
-            class="chat-input__field"
-            type="text"
-            placeholder="Escribe un mensaje..."
-            aria-label="Mensaje"
-          >
+          <div class="chat-input__wrap">
+            <input
+              class="chat-input__field"
+              type="text"
+              placeholder="Escribe un mensaje..."
+              aria-label="Mensaje"
+            >
+            <span class="chat-input__caret" hidden></span>
+          </div>
           <button class="chat-input__send" type="button" aria-label="Enviar">➤</button>
         </footer>
       </section>
@@ -66,8 +69,15 @@ export const chatView = {
 
     const messagesEl = document.querySelector("#chat-messages");
     const inputEl = document.querySelector(".chat-input__field");
+    const caretEl = document.querySelector(".chat-input__caret");
     const sendBtn = document.querySelector(".chat-input__send");
     const clearBtn = document.querySelector(".chat-header__clear");
+
+    function updateCaret() {
+      const isEmpty = inputEl.value.trim() === "";
+      const isFocused = document.activeElement === inputEl;
+      caretEl.hidden = isFocused || !isEmpty;
+    }
 
     function updateHistoryBadge() {
       const badge = document.querySelector(".history-badge");
@@ -174,16 +184,22 @@ export const chatView = {
         inputEl.disabled = false;
         sendBtn.disabled = false;
         if (clearBtn) clearBtn.disabled = false;
-        inputEl.focus();
+        if (canAutofocus) inputEl.focus();
         renderMessages();
         updateHistoryBadge();
       }
     }
 
+    const canAutofocus = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (canAutofocus) inputEl.focus();
+
     sendBtn.addEventListener("click", handleSend);
     inputEl.addEventListener("keydown", (event) => {
       if (event.key === "Enter") handleSend();
     });
+    inputEl.addEventListener("focus", updateCaret);
+    inputEl.addEventListener("blur", updateCaret);
+    inputEl.addEventListener("input", updateCaret);
     if (clearBtn) clearBtn.addEventListener("click", handleClear);
 
     messagesEl.addEventListener("click", async (event) => {
@@ -207,5 +223,6 @@ export const chatView = {
     });
 
     renderMessages();
+    updateCaret();
   },
 };
