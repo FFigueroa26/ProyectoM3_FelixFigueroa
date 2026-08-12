@@ -9,52 +9,82 @@ personajes ficticios de películas y series usando **inteligencia artificial (Go
 
 ## 🚀 Ejecutar en local
 
-1. **Clonar el repositorio**
+### Paso rápido
 
-   ```bash
-   git clone https://github.com/FFigueroa26/ProyectoM3_FelixFigueroa.git
-   cd ProyectoM3_FelixFigueroa
-   ```
+```bash
+git clone https://github.com/FFigueroa26/ProyectoM3_FelixFigueroa.git
+cd ProyectoM3_FelixFigueroa
+```
 
-   O bien, dale **Code → Download ZIP** en GitHub y descomprime el proyecto.
+### 1. Instalar dependencias
 
-2. **Descargar dependencias**
+```bash
+npm install
+```
 
-   ```bash
-   npm install
-   ```
+### 2. Configurar la clave de Gemini
 
-3. **Configurar la clave de Gemini**
+Crea un archivo `.env` en la raíz del proyecto con:
 
-   Crea un archivo `.env` en la raíz del proyecto:
+```env
+GEMINI_API_KEY=tu_api_key_aqui
+```
 
-   ```env
-   GEMINI_API_KEY=tu_api_key_aqui
-   ```
+### 3. Ejecutar con Vercel (obligatorio)
 
-4. **Ejecutar con Vercel dev**
+Este proyecto usa una Serverless Function en `/api/functions`, por lo que
+la aplicación debe ejecutarse con el CLI de Vercel para que el chat funcione.
 
-   El proyecto usa una Serverless Function (`/api/functions`) que actúa como proxy
-   hacia Gemini, por lo que la app debe ejecutarse con el CLI de Vercel para tener esa ruta:
+Flujo normal:
 
-   ```bash
-   npm i -g vercel
-   npx vercel dev --yes
-   ```
+```bash
+npm run vercel-dev
+```
 
-   Se levanta el servidor (por defecto en `http://localhost:3000`).
+Si Vercel te pide elegir un proyecto, entonces vincula esta carpeta con el
+proyecto correcto antes de levantarlo:
 
-> **Nota:** `npx vercel dev --yes` confirma automáticamente la inicialización del
-> proyecto y evita errores al usar el CLI por primera vez. La primera ejecución
-> también te pedirá autenticación; si no tienes cuenta, créala de forma gratuita
-> en [vercel.com](https://vercel.com) e inicia sesión con `vercel login`.
+```bash
+npx vercel link
+```
 
-> **Nota (Windows):** si PowerShell bloquea `npx.ps1` por la política de ejecución
-> de scripts (`No se puede cargar el archivo ... npx.ps1 porque la ejecución de
-> scripts está deshabilitada`), usa el ejecutable directo: `npx.cmd vercel dev --yes`
-> (o habilita scripts con `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`).
+Y luego vuelve a ejecutar:
 
-> **Nota:** la clave **nunca** se expone al navegador; solo se usa en el lado del servidor.
+```bash
+npm run vercel-dev
+```
+
+> **Importante:** no es suficiente correr `npm run dev` o `vite` directamente.
+> Si se ejecuta sin Vercel, la ruta `/api/functions` no estará disponible y el
+> chat no podrá enviar ni recibir mensajes.
+
+### 4. Abrir la aplicación
+
+Una vez levantado el servidor, abre:
+
+```text
+http://localhost:3000
+```
+
+### Nota para Windows
+
+Si PowerShell bloquea `npx.ps1` por la política de ejecución de scripts,
+usa este comando en su lugar:
+
+```bash
+npx.cmd vercel dev --yes
+```
+
+O bien ejecuta el comando desde `cmd.exe`.
+
+### Nota sobre la cuenta de Vercel
+
+`npx vercel dev --yes` puede pedir autenticación la primera vez. Si no tienes
+cuenta, regístrate en [vercel.com](https://vercel.com) e inicia sesión con
+`vercel login`.
+
+> **Seguridad:** la clave `GEMINI_API_KEY` se usa solo en el servidor y no se
+> expone al navegador.
 
 ---
 
