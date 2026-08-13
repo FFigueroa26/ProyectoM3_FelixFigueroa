@@ -1,5 +1,8 @@
+import fs from "node:fs";
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { getMessages, addMessage, clearMessages, hasHistory } from "../src/services/messages.js";
+
+const componentsCss = fs.readFileSync(new URL("../src/styles/components.css", import.meta.url), "utf8");
 
 function createStorageMock() {
   const store = {};
@@ -24,6 +27,13 @@ describe("messages store", () => {
 
   afterEach(() => {
     delete globalThis.localStorage;
+  });
+
+  it("alinea las burbujas del usuario y del personaje de forma consistente", () => {
+    expect(componentsCss).toContain(".message--user");
+    expect(componentsCss).toContain("justify-content: flex-end");
+    expect(componentsCss).toContain(".message--character");
+    expect(componentsCss).toContain("justify-content: flex-start");
   });
 
   it("agrega y obtiene mensajes por personaje", () => {
