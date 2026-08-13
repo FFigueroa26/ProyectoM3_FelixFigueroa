@@ -7,84 +7,73 @@ personajes ficticios de películas y series usando **inteligencia artificial (Go
 
 ---
 
+## ⚙️ Requisitos previos
+
+- **Node.js** 18+ (incluye npm)
+- Una **API key de Google Gemini** ([console.cloud.google.com](https://console.cloud.google.com))
+
+---
+
 ## 🚀 Ejecutar en local
 
-### Paso rápido
+Sigue estos pasos en orden:
+
+### 1. Clonar el repositorio
 
 ```bash
 git clone https://github.com/FFigueroa26/ProyectoM3_FelixFigueroa.git
 cd ProyectoM3_FelixFigueroa
 ```
 
-### 1. Instalar dependencias
+### 2. Instalar dependencias
 
 ```bash
 npm install
 ```
 
-### 2. Configurar la clave de Gemini
+### 3. Crear archivo `.env`
 
-Crea un archivo `.env` en la raíz del proyecto con:
+Crea un archivo `.env` en la raíz del proyecto y agrega tu API key de Gemini:
 
 ```env
 GEMINI_API_KEY=tu_api_key_aqui
 ```
 
-### 3. Ejecutar con Vercel (obligatorio)
-
-Este proyecto usa una Serverless Function en `/api/functions`, por lo que
-la aplicación debe ejecutarse con el CLI de Vercel para que el chat funcione.
-
-Flujo normal:
+### 4. Iniciar el servidor
 
 ```bash
 npm run vercel-dev
 ```
 
-Si Vercel te pide elegir un proyecto, entonces vincula esta carpeta con el
-proyecto correcto antes de levantarlo:
+> ⚠️ **Importante:** Debes usar `npm run vercel-dev` (no `npm run dev`). Este proyecto tiene Serverless Functions en `/api/functions` que solo funcionan con Vercel CLI.
 
-```bash
-npx vercel link
+### 5. Abrir en el navegador
+
+Una vez que veas el mensaje **"Ready! Available at http://localhost:3000"**, abre:
+
 ```
-
-Y luego vuelve a ejecutar:
-
-```bash
-npm run vercel-dev
-```
-
-> **Importante:** no es suficiente correr `npm run dev` o `vite` directamente.
-> Si se ejecuta sin Vercel, la ruta `/api/functions` no estará disponible y el
-> chat no podrá enviar ni recibir mensajes.
-
-### 4. Abrir la aplicación
-
-Una vez levantado el servidor, abre:
-
-```text
 http://localhost:3000
 ```
 
-### Nota para Windows
+---
 
-Si PowerShell bloquea `npx.ps1` por la política de ejecución de scripts,
-usa este comando en su lugar:
+### 🔧 Solución de problemas
 
+**En Windows con PowerShell:**
+Si PowerShell bloquea la ejecución, usa `cmd.exe` o este comando:
 ```bash
 npx.cmd vercel dev --yes
 ```
 
-O bien ejecuta el comando desde `cmd.exe`.
+**Primera ejecución con Vercel:**
+Si te pide autenticación, inicia sesión:
+```bash
+vercel login
+```
 
-### Nota sobre la cuenta de Vercel
+---
 
-`npx vercel dev --yes` puede pedir autenticación la primera vez. Si no tienes
-cuenta, regístrate en [vercel.com](https://vercel.com) e inicia sesión con
-`vercel login`.
-
-> **Seguridad:** la clave `GEMINI_API_KEY` se usa solo en el servidor y no se
-> expone al navegador.
+> **🔒 Seguridad:** la clave `GEMINI_API_KEY` se usa solo en el servidor y **nunca se expone** al navegador.
 
 ---
 
@@ -162,13 +151,6 @@ propio prompt de contexto:
 
 ---
 
-## ⚙️ Requisitos
-
-- **Node.js** 18+ (contiene `npm`)
-- Una **API key de Google Gemini** ([console.cloud.google.com](https://console.cloud.google.com))
-
----
-
 ## 🧪 Ejecutar los tests
 
 Los tests unitarios usan **Vitest** y **mockean `fetch`** para que corran sin conexión ni consumo de API.
@@ -220,16 +202,14 @@ una Serverless Function (`/api/functions`) y el resto se redirija a `index.html`
 
 ## 🤖 Registro del uso de IA
 
-Este proyecto integra **inteligencia artificial** de la siguiente forma:
+Durante el desarrollo consulté a una IA (asistente de código) para estas tareas:
 
-- **Modelo**: `gemini-3.1-flash-lite` de Google (vía la API `generativelanguage.googleapis.com`).
-- **Prompt de sistema**: Cada personaje tiene una definición de personalidad, tono y
-  límites éticos (ver `src/services/prompts.js`).
-- **Historial**: Se envían los mensajes previos de la conversación junto con el prompt
-  para mantener confusión y coherencia del personaje.
-- **Proxy servicial**: La clave de API solo vive en el servidor (`api/functions.js`),
-  nunca en el cliente.
-- **Sin retención local**: El historial se guarda únicamente en el `localStorage` del
-  navegador del usuario.
-- **Verificación**: Los tests unitarios mockean la llamada a la IA (con `fetch`) para
-  validar la lógica sin contactar el modelo.
+| # | Prompt que hice | Respuesta de la IA | Cómo lo integre |
+|---|---|---|---|
+| 1 | ¿Cómo hago para que el chat use IA? | Propuso una Serverless Function que actúa como proxy a la API de Gemini. | Creé `api/functions.js` que recibe el mensaje, lo envía a Gemini y devuelve la respuesta. |
+| 2 | ¿Cómo muestro los mensajes del chat? | Sugirió renderizar cada mensaje como burbuja y el historial en `localStorage`. | Lo apliqué en `src/views/chat.js` y `src/services/messages.js`. |
+| 3 | ¿Cómo hago que el campo de texto se enfoque solo? | Recomendó autofocus en escritorio y un cursor animado en móvil. | Agregué autofocus con `matchMedia` y un cursor decorativo en `layout.css`. |
+| 4 | ¿Qué modelo de Gemini usar? | Señaló que `gemini-2.5-flash-lite` ya no está disponible y sugirió `gemini-3.1-flash-lite`. | Lo configuré en `src/server/chatPayload.js`. |
+| 5 | ¿Cómo evito borrar el historial por accidente? | Sugirió pedir confirmación antes de borrar. | Agregué un `window.confirm` en el botón "Borrar" de `src/views/chat.js`. |
+
+La clave de API solo se usa en el servidor y **nunca se expone** al navegador.
