@@ -3,6 +3,7 @@ import { charactersView } from "./views/characters.js";
 import { chatView } from "./views/chat.js";
 import { aboutView } from "./views/about.js";
 import { notFoundView } from "./views/notFound.js";
+import { parsePath } from "./routerMatcher.js";
 
 const routes = [
   { path: "/", redirect: "/home" },
@@ -14,26 +15,6 @@ const routes = [
 
 const app = document.querySelector("#app");
 
-function parsePath(pathname) {
-  const parts = pathname.split("/").filter(Boolean);
-  for (const route of routes) {
-    const routeParts = route.path.split("/").filter(Boolean);
-    if (routeParts.length !== parts.length) continue;
-    const params = {};
-    let match = true;
-    for (let i = 0; i < routeParts.length; i++) {
-      if (routeParts[i].startsWith(":")) {
-        params[routeParts[i].slice(1)] = parts[i];
-      } else if (routeParts[i] !== parts[i]) {
-        match = false;
-        break;
-      }
-    }
-    if (match) return { route, params };
-  }
-  return null;
-}
-
 function navigate(path) {
   history.pushState({}, "", path);
   render();
@@ -41,7 +22,7 @@ function navigate(path) {
 
 function render() {
   const { pathname } = window.location;
-  const found = parsePath(pathname);
+  const found = parsePath(pathname, routes);
 
   if (!found) {
     app.innerHTML = notFoundView.render();
